@@ -1,7 +1,7 @@
 import random
 
 
-class Pocky:
+class Poker:
     POKER_TYPE = ['♠', '♥', '♣', '♦']
     POKER_KING = ['J', 'Q', 'K']
     POKER_NUM = 11
@@ -13,9 +13,9 @@ class Pocky:
 
     @classmethod
     def create_poker(cls):
-        types = Pocky.POKER_TYPE
-        numbers = Pocky.POKER_NUM
-        king = Pocky.POKER_KING
+        types = Poker.POKER_TYPE
+        numbers = Poker.POKER_NUM
+        king = Poker.POKER_KING
         poker_list = list()
         for n in range(1, numbers):
             for t in types:
@@ -30,38 +30,43 @@ class Pocky:
     @classmethod
     def verify_pocker(cls, my_poker):
         check_poker = set(my_poker)
-        if len(check_poker) != Pocky.POKER_TOTALLY:
+        if len(check_poker) != Poker.POKER_TOTALLY:
             raise Exception('Missing card')
         else:
             return True
 
     @classmethod
-    def start_shuffle(cls, player):
-        Pokers = Pocky.create_poker()
-        if player > Pocky.PEOPLE_MAX_LIMIT or player <= Pocky.PEOPLE_MIN_LIMIT:
+    def start_shuffle(cls, player=3):
+        Pokers = Poker.create_poker()
+        if player > Poker.PEOPLE_MAX_LIMIT or player <= Poker.PEOPLE_MIN_LIMIT:
             raise Exception('cannot over four players or less two players')
-        check = Pocky.verify_pocker(Pokers)
+        Poker.verify_pocker(Pokers)
         random.shuffle(Pokers)
         num = len(Pokers) // player
         play = [Pokers[pocker:pocker + num] for pocker in range(0, len(Pokers), num)]
         print(f' {player} player.')
-        if player == Pocky.DIFFERENT_CASE:
+        if player == Poker.DIFFERENT_CASE:
             for p in play:
-                if Pocky.DEFAULT in p:
+                if Poker.DEFAULT in p:
                     p.extend(play[-1])
                 if len(p) < player:
                     play.pop()
                     return play
         return play
 
-    # @classmethod
-    # def play_rule(cls):
+    @classmethod
+    def play_rule(cls):
+        a = Poker.start_shuffle()
+        for i in a:
+            print(i)
+
 
 
 
 
 if __name__ == '__main__':
-    print(Pocky.start_shuffle(player=3))
+    # print(Poker.start_shuffle(player=3))
+    Poker.play_rule()
 
 
 
